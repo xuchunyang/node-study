@@ -1,0 +1,22 @@
+{
+  "name": "study",
+  "version": "1.0.0",
+  "description": "学习 Node 写的代码",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuchunyang/node-study.git"
+  },
+  "author": "徐春阳",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/xuchunyang/node-study/issues"
+  },
+  "homepage": "https://github.com/xuchunyang/node-study#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.35"
+  }
+}
