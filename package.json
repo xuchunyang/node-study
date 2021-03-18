@@ -18,5 +18,8 @@
   "homepage": "https://github.com/xuchunyang/node-study#readme",
   "devDependencies": {
     "@types/node": "^14.14.35"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }

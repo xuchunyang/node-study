@@ -1,5 +1,6 @@
 const fs = require("fs");
 const assert = require("assert");
+const { debounce } = require("lodash");
 
 const path = process.argv[2];
 assert.ok(path, "path is missing");
@@ -64,6 +65,8 @@ process.stdin.on("data", (chunk) => {
   keys.forEach(processKey);
 });
 
+const renderDebounced = debounce(render, 200);
+
 let input = "";
 function processKey(key) {
   // C-c
@@ -79,7 +82,8 @@ function processKey(key) {
     input = input + key;
   }
 
-  render();
+  //   render();
+  renderDebounced();
 }
 
 const linesLimit = process.stdout.rows - 2;
@@ -90,12 +94,19 @@ function filteredLines() {
   return lines.filter((line) => line.includes(input));
 }
 
-const prompt = "\x1b[34m>\x1b[0m ";
-const promptLen = 2;
+// const prompt = "\x1b[34m>\x1b[0m ";
+let renderCount = 0;
+function prompt() {
+  const pr = `\x1b[34m${renderCount}>\x1b[0m `;
+  promptLen = pr.length - 5 - 4;
+  return pr;
+}
+let promptLen = 2;
 function render() {
+  renderCount++;
   process.stdout.write(codes.clear_entire_screen + codes.home);
 
-  console.log(prompt + input);
+  console.log(prompt() + input);
   filteredLines()
     .slice(0, linesLimit)
     .forEach((line, idx) => {
