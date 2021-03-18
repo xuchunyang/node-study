@@ -71,6 +71,7 @@ let input = "";
 function processKey(key) {
   // C-c
   if (key === "\x03") {
+    clearScreen();
     process.exit(0);
     return;
   }
@@ -136,6 +137,10 @@ function render() {
 
   process.stdout.write(codes.home);
   process.stdout.moveCursor(promptLen + input.length);
+}
+
+function clearScreen() {
+  process.stdout.write(codes.clear_entire_screen + codes.home);
 }
 
 render();
