@@ -88,10 +88,22 @@ function processKey(key) {
 
 const linesLimit = process.stdout.rows - 2;
 
+// todo: select item with up/down arrow keys
+
 function filteredLines() {
   if (input === "") return lines;
-  // todo: highlight matching party
-  return lines.filter((line) => line.includes(input));
+  // todo: highlight all matches in a line, not just the first
+  const matches = [];
+  for (const line of lines) {
+    const start = line.indexOf(input);
+    if (start === -1) continue;
+
+    const prefix = line.slice(0, start);
+    const middle = line.slice(start, start + input.length);
+    const suffix = line.slice(start + input.length);
+    matches.push({ prefix, middle, suffix });
+  }
+  return matches;
 }
 
 // const prompt = "\x1b[34m>\x1b[0m ";
@@ -109,8 +121,17 @@ function render() {
   console.log(prompt() + input);
   filteredLines()
     .slice(0, linesLimit)
-    .forEach((line, idx) => {
-      console.log(`\x1b[31m${idx + 1}\x1b[0m:` + line);
+    .forEach((match, idx) => {
+      if (typeof match === "string") {
+        console.log(`\x1b[31m${idx + 1}\x1b[0m:` + match);
+      } else {
+        console.log(
+          `\x1b[31m${idx + 1}\x1b[0m:` +
+            match.prefix +
+            `\x1b[33m${match.middle}\x1b[0m` +
+            match.suffix
+        );
+      }
     });
 
   process.stdout.write(codes.home);
