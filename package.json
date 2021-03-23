@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "better-sqlite3": "^7.1.2",
     "lodash": "^4.17.21",
     "tunnel": "0.0.6"
   }
