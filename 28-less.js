@@ -24,7 +24,7 @@ function processKey(key) {
   const s = String.fromCharCode(key);
   switch (s) {
     case "q":
-      process.exit(0);
+      viewer.quit();
       break;
     case "j":
       viewer.down();
@@ -60,6 +60,10 @@ const viewer = {
     // https://en.wikipedia.org/wiki/ANSI_escape_code
     // Move cursor; Clear screen; Hide cursor
     process.stdout.write("\x1b[1;1H" + "\x1b[2J" + "\x1b[?25l");
+  },
+  quit() {
+    process.stdout.write("\x1b[?25h");
+    process.exit();
   },
   render() {
     this.clear();
